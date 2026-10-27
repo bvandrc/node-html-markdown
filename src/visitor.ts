@@ -1,8 +1,7 @@
 import { NodeHtmlMarkdown } from './main';
 import { ElementNode, HtmlNode, isElementNode, isTextNode } from './nodes';
 import {
-  collapsibleWhitespaceRegex, getChildNodes, getTrailingWhitespaceInfo, isCollapsibleWhitespace, perfStart, perfStop,
-  trimNewLines
+  collapsibleWhitespaceRegex, getChildNodes, getTrailingWhitespaceInfo, perfStart, perfStop, trimNewLines
 } from './utilities';
 import {
   createTranslatorContext, isTranslatorConfig, PostProcessResult, TranslatorConfig, TranslatorConfigFactory,
@@ -167,7 +166,7 @@ export class Visitor {
         (<any>node).trimmedText ??= trimNewLines((<any>node).wholeText);
       }
 
-      if (isCollapsibleWhitespace(node.rawText) && !metadata?.preserveWhitespace) {
+      if (node.isCollapsibleWhitespace && !metadata?.preserveWhitespace) {
         return (!result.text.length || result.trailingNewlineStats.whitespace > 0) ? void 0 : this.appendResult(' ');
       }
 
