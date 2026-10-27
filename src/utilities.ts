@@ -15,8 +15,10 @@ export const isWhiteSpaceOnly = (s: string) => !/\S/.test(s);
  * Whitespace that HTML collapses: ASCII only (https://infra.spec.whatwg.org/#ascii-whitespace).
  * Unlike `\s`, it leaves out NBSP (U+00A0, `&nbsp;`), which exists to not be collapsed.
  */
-export const collapsibleWhitespaceRegex = /[ \t\n\f\r]+/g;
-export const isCollapsibleWhitespace = (s: string) => /^[ \t\n\f\r]*$/.test(s);
+const collapsibleWhitespace = '[ \\t\\n\\f\\r]';
+export const collapsibleWhitespaceRegex = new RegExp(`${collapsibleWhitespace}+`, 'g');
+const collapsibleWhitespaceOnlyRegex = new RegExp(`^${collapsibleWhitespace}*$`);
+export const isCollapsibleWhitespace = (s: string) => collapsibleWhitespaceOnlyRegex.test(s);
 
 /**
  * Split string, preserving specific newline used for each line
